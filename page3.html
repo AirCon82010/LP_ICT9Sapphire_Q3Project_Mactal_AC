@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Info</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #ffffff;
+            text-align: center;
+            background: #101f3b;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .navbar {
+            background-color: #1B3A57;
+            padding: 15px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 50px;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .submit-btn {
+            background-color: #4dabf7;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            transition: box-shadow 0.3s ease-in-out, transform 0.25s ease-in-out;
+        }
+        .submit-btn:hover {
+            box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+        .popup-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e3a5f;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .popup-box .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+        }
+        .popup-box span {
+            color: #4dabf7;
+        }
+        .footer {
+            background-color: #1e272e;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1B3A57">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="data:image/png;base64,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" alt="Logo" width="50px" height="50px" class="rounded-circle"></a>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="page2.html">Train Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="page3.html">Contact Info</a>
+                </li>
+            </ul>
+            <!--<form class="d-flex mx-auto">
+                <input class="form-control" type="search" placeholder="🔍 Search" aria-label="Search">  
+                <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>-->  
+        </div>
+    </div>
+</div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+    <h1>Contact Info</h1>
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea class="form-control" id="comment" rows="3" placeholder="Enter your comment"></textarea>
+        </div>
+        <button type="button" class="submit-btn" onclick="showPopup()">Submit</button>
+    </form>
+</div>
+
+<!-- Popup Box -->
+<div class="popup-box" id="popup">
+    <span class="close-btn" onclick="closePopup()">&times;</span>
+    <h3>✅ <span>Submitted!</span></h3>
+    <p>Thank You! Your application has been successfully submitted.</p>
+</div>
+
+<script>
+    function showPopup() {
+        document.getElementById('popup').style.display = 'block';
+    }
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
+<div class="footer">
+        AC Mactal and Cade Chua , 9 - Sapphire
+    </div>
+</body>
+</html>
